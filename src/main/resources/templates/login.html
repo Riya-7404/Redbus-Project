@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | redBus Pro Enterprise</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --rb-red: #D84E55; --rb-dark: #1F222F; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(rgba(31, 34, 47, 0.8), rgba(31, 34, 47, 0.8)), 
+                        url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--rb-red);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .form-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--rb-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-control {
+            border-radius: 12px;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            transition: 0.3s;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: var(--rb-red);
+            box-shadow: none;
+            background: white;
+        }
+
+        .btn-login {
+            background: var(--rb-red);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-top: 20px;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(216, 78, 85, 0.3);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(216, 78, 85, 0.4);
+            background: #c13e44;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: var(--rb-red);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #555;
+            transition: 0.3s;
+        }
+
+        .social-btn:hover {
+            background: #f0f0f0;
+            border-color: var(--rb-red);
+            color: var(--rb-red);
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="brand-logo">red<span style="color: var(--rb-dark);">Bus</span></div>
+    <p class="text-center text-muted mb-4 fw-bold">Enterprise Mobility Portal</p>
+
+    <form action="/loginUser" method="post" id="lForm">
+        <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border-0"><i class="bi bi-envelope-at"></i></span>
+                <input type="email" name="email" class="form-control" placeholder="example@redbus.com" required>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border-0"><i class="bi bi-shield-lock"></i></span>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mb-4">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="remember">
+                <label class="form-check-label small" for="remember">Remember me</label>
+            </div>
+            <a href="#" class="small text-danger text-decoration-none fw-bold">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn-login">Secure Login</button>
+    </form>
+
+    <div class="signup-link">
+        Don't have an account? <a href="/signup">Join redBus Pro</a>
+    </div>
+
+    <div class="mt-4 text-center">
+        <div class="small text-muted mb-2">Or Login With</div>
+        <div class="social-login">
+            <a href="#" class="social-btn"><i class="bi bi-google"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-apple"></i></a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('lForm').onsubmit = function() {
+        const email = document.querySelector('input[name="email"]').value;
+        localStorage.setItem('isLoggedIn', 'true');
+        // Isse aapka naam index page pe dikhega
+        localStorage.setItem('activeUser', email.split('@')[0].toUpperCase());
+    };
+</script>
+
+</body>
+</html>

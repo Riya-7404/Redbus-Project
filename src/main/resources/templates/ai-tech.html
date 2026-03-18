@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Technology | redBus Pro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --rb-red: #D84E55; --rb-dark: #1F222F; --rb-light: #F8F9FA; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fff; }
+        
+        /* Navbar Styling */
+        .navbar { background: white; border-bottom: 1px solid #eee; padding: 15px 0; }
+        .nav-link { font-weight: 700; color: var(--rb-dark) !important; margin: 0 12px; font-size: 14px; text-transform: uppercase; }
+
+        .ai-hero { 
+            background: linear-gradient(135deg, var(--rb-dark) 0%, #3a3f58 100%);
+            color: white; padding: 120px 0; text-align: center;
+            border-radius: 0 0 80px 80px;
+        }
+        
+        .feature-card {
+            border: none; border-radius: 30px; padding: 45px;
+            background: var(--rb-light); transition: 0.4s; height: 100%;
+        }
+        .feature-card:hover { 
+            transform: translateY(-10px); background: white; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08); 
+        }
+        
+        .icon-box {
+            width: 70px; height: 70px; background: white; 
+            border-radius: 20px; display: flex; align-items: center;
+            justify-content: center; margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(216, 78, 85, 0.15);
+            color: var(--rb-red); font-size: 2rem;
+        }
+
+        /* --- MEGA FOOTER CSS --- */
+        .mega-footer { background: var(--rb-dark); color: #8a8d91; padding: 80px 0 30px; margin-top: 100px; }
+        .footer-heading { color: white; font-weight: 800; margin-bottom: 25px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 12px; font-size: 14px; transition: 0.3s; cursor: pointer; }
+        .footer-links li:hover { color: var(--rb-red); padding-left: 5px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-bold text-danger fs-3" href="/">red<span class="text-dark">Bus</span></a>
+            <div class="d-none d-lg-flex align-items-center">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/dashboard">Bus Tickets</a>
+                <a class="nav-link" href="/ai-tech" style="color: var(--rb-red) !important;">AI Tech</a>
+                <div id="authSlot" class="ms-3"></div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="ai-hero">
+        <div class="container">
+            <h1 class="display-3 fw-800 mb-3">The Power of <span class="text-danger">AI</span></h1>
+            <p class="fs-4 opacity-75">Making every journey smarter, faster, and safer with Predictive Analytics.</p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-graph-down-arrow"></i></div>
+                    <h4 class="fw-bold">Dynamic Pricing</h4>
+                    <p class="text-muted">Our AI tracks 1,000+ routes to predict price drops. Save up to 40% by booking at the AI-recommended time.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-shield-check"></i></div>
+                    <h4 class="fw-bold">Safety AI</h4>
+                    <p class="text-muted">Real-time driver fatigue monitoring and speed tracking to ensure you reach your destination safely.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-lightning-charge"></i></div>
+                    <h4 class="fw-bold">Instant Refunds</h4>
+                    <p class="text-muted">No more waiting for 7 days. Our AI processes valid refund requests in under 60 seconds via smart-contracts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center py-5">
+        <button class="btn btn-danger btn-lg px-5 rounded-pill fw-bold shadow-lg" onclick="location.href='/'">Go Back to Booking</button>
+    </div>
+
+    <footer class="mega-footer">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3">
+                    <h3 class="text-white fw-bold mb-4">redBus Pro</h3>
+                    <p class="small opacity-75">Leading the global digital transformation of the bus industry with cutting-edge technology.</p>
+                    <div class="d-flex gap-3 mt-4 text-white">
+                        <i class="bi bi-facebook fs-4"></i><i class="bi bi-twitter-x fs-4"></i><i class="bi bi-linkedin fs-4"></i><i class="bi bi-youtube fs-4"></i>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Top Routes</h6>
+                    <ul class="footer-links">
+                        <li>Mumbai to Pune</li><li>Bangalore to Chennai</li><li>Delhi to Jaipur</li><li>Hyderabad to Bangalore</li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Quick Links</h6>
+                    <ul class="footer-links">
+                        <li>About Us</li><li>Contact Us</li><li>Privacy Policy</li><li>FAQ</li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Our Products</h6>
+                    <ul class="footer-links">
+                        <li>Bus Tickets</li><li>Rail Tickets</li><li>Cab Rentals</li><li>Insurance</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <h6 class="footer-heading">Global Sites</h6>
+                    <p class="small mb-4 opacity-75">Available in 15+ countries worldwide.</p>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control bg-dark border-0 text-white shadow-none" placeholder="Enter Email">
+                        <button class="btn btn-danger px-4">Join</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-5 opacity-25">
+            <div class="row pt-4 small opacity-50">
+                <div class="col-md-6">© 2026 redBus India Pvt Ltd. All rights reserved.</div>
+                <div class="col-md-6 text-md-end">Safety+ Certified Partner.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.onload = function() {
+            const user = localStorage.getItem('activeUser');
+            const authSlot = document.getElementById('authSlot');
+            
+            if(user && authSlot) {
+                authSlot.innerHTML = `
+                    <div class="dropdown">
+                        <button class="btn btn-dark rounded-pill px-4 dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-2"></i> Hello, ${user}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3">
+                            <li><a class="dropdown-item py-2" href="/dashboard">My Bookings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()">Logout</a></li>
+                        </ul>
+                    </div>`;
+            } else if(authSlot) {
+                authSlot.innerHTML = `<button class="btn btn-danger rounded-pill px-5 fw-bold" onclick="location.href='/login'">LOG IN</button>`;
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "/login";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join redBus Pro | Create Account</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --rb-red: #D84E55; --rb-dark: #1F222F; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(rgba(31, 34, 47, 0.8), rgba(31, 34, 47, 0.8)), 
+                        url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.3);
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--rb-red);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .form-label {
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--rb-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 10px 15px;
+            border: 2px solid #eee;
+            background: #f8f9fa;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--rb-red);
+            box-shadow: none;
+            background: white;
+        }
+
+        .btn-signup {
+            background: var(--rb-red);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-top: 15px;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(216, 78, 85, 0.2);
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            background: #c13e44;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .login-link a {
+            color: var(--rb-red);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        /* Custom scrollbar for small screens */
+        .signup-container::-webkit-scrollbar { width: 5px; }
+        .signup-container::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="signup-container shadow-lg">
+    <div class="brand-logo">red<span style="color: var(--rb-dark);">Bus</span> <small class="fs-6 text-muted">PRO</small></div>
+    <p class="text-center text-muted mb-4">Create your account to start booking</p>
+
+    <form action="/registerUser" method="post" id="sForm">
+        <div class="row g-3">
+            <div class="col-md-12">
+                <label class="form-label">Full Name</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-0"><i class="bi bi-person"></i></span>
+                    <input type="text" name="fullName" class="form-control" placeholder="John Doe" required>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Email Address</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-0"><i class="bi bi-envelope"></i></span>
+                    <input type="email" name="email" class="form-control" placeholder="john@example.com" required>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Mobile Number</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-0"><i class="bi bi-phone"></i></span>
+                    <input type="tel" name="phone" class="form-control" placeholder="+91 00000 00000" required>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Create Password</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-0"><i class="bi bi-lock"></i></span>
+                    <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-check mt-3">
+            <input type="checkbox" class="form-check-input" id="terms" required>
+            <label class="form-check-label small text-muted" for="terms">
+                I agree to the <a href="#" class="text-danger text-decoration-none">Terms & Conditions</a>
+            </label>
+        </div>
+
+        <button type="submit" class="btn-signup">Create My Account</button>
+    </form>
+
+    <div class="login-link">
+        Already have an account? <a href="/login">Login Now</a>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('sForm').onsubmit = function() {
+        // Registration logic usually doesn't log the user in immediately in Spring Boot 
+        // without a redirect, but we can set a 'justRegistered' flag if needed.
+        alert("Registration Request Sent! Please login with your credentials.");
+    };
+</script>
+
+</body>
+</html>

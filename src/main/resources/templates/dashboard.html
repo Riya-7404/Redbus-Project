@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | redBus Pro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --rb-red: #D84E55; --rb-dark: #1F222F; --rb-light: #f8f9fa; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--rb-light); color: var(--rb-dark); }
+        
+        /* Navbar */
+        .navbar { background: white; border-bottom: 1px solid #eee; padding: 15px 0; }
+        .nav-link { font-weight: 700; color: var(--rb-dark) !important; margin: 0 12px; font-size: 14px; text-transform: uppercase; }
+
+        /* Dashboard Cards */
+        .history-card { border-left: 5px solid #198754; background: #f0fff4; border-radius: 15px; }
+        .bus-card { border-left: 5px solid var(--rb-red); border-radius: 15px; transition: 0.3s; background: white; }
+        .bus-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        /* Seat Selection UI */
+        #seatSelectionSection { display: none; margin-top: 50px; padding-bottom: 150px; } /* Extra padding for Price Bar */
+        .bus-outer {
+            background: white; border-radius: 30px; padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1); border: 2px solid #eee;
+            max-width: 500px; margin: 0 auto; position: relative;
+        }
+        .steering { position: absolute; top: 20px; right: 40px; font-size: 2rem; color: #ddd; }
+        .seat-row { display: flex; justify-content: space-between; margin-bottom: 25px; }
+        .sleeper-seat {
+            width: 50px; height: 100px; border: 2px solid #ccc; border-radius: 8px;
+            cursor: pointer; position: relative; transition: 0.3s; background: white;
+            display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; color: #999;
+        }
+        .sleeper-seat.selected { background: var(--rb-red); border-color: var(--rb-red); color: white; }
+        .sleeper-seat.booked { background: #e0e0e0; border-color: #d0d0d0; cursor: not-allowed; color: #bbb; }
+
+        /* Fixed Price Bar */
+        .price-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; background: white;
+            padding: 20px; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); display: none; z-index: 2000;
+        }
+
+        /* MEGA FOOTER CSS (Aapka missing part) */
+        .mega-footer { background: var(--rb-dark); color: #8a8d91; padding: 80px 0 30px; margin-top: 100px; }
+        .footer-heading { color: white; font-weight: 800; margin-bottom: 25px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 12px; font-size: 14px; transition: 0.3s; cursor: pointer; }
+        .footer-links li:hover { color: var(--rb-red); padding-left: 5px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-bold text-danger fs-3" href="/">red<span class="text-dark">Bus</span> <span class="badge bg-danger ms-1 fs-6">PRO</span></a>
+            <div class="d-none d-lg-flex align-items-center">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/all-buses">All Routes</a>
+                <a class="nav-link" href="/ai-tech">AI Tech</a>
+                <div id="authSlot" class="ms-3"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div th:if="${message}" class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4">
+            <i class="bi bi-check-circle-fill me-2"></i> <span th:text="${message}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(myBookings)}" class="mb-5">
+            <h4 class="fw-bold mb-3 text-dark"><i class="bi bi-clock-history me-2 text-success"></i> My Recent Bookings</h4>
+            <div th:each="book : ${myBookings}" class="card history-card border-0 shadow-sm p-3 mb-3">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <span class="badge bg-success mb-1">Confirmed</span>
+                        <h5 class="fw-bold mb-0" th:text="${book.source} + ' ➝ ' + ${book.destination}">Mumbai ➝ Pune</h5>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="small text-muted">SEATS</div>
+                        <div class="fw-bold text-dark" th:text="${book.seatNumbers}">LS1, LS2</div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="fw-bold text-danger fs-5">₹ <span th:text="${book.amount}">0</span></div>
+                        <small class="text-muted" th:text="${book.bookingDate}">Date</small>
+                    </div>
+                    <div class="col-md-3 text-end">
+                        <form th:action="@{/cancelBooking}" method="POST" onsubmit="return confirm('Do you really want to cancel this booking?')">
+                            <input type="hidden" name="bookingId" th:value="${book.id}">
+                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                                <i class="bi bi-x-circle me-1"></i> Cancel Ticket
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 opacity-25">
+        </div>
+
+        <h2 class="fw-bold mb-4">
+            <i class="bi bi-bus-front-fill text-danger me-2"></i>
+            <span th:text="${fromCity}">Available Buses</span> 
+            <span th:if="${toCity != null}" th:text="' to ' + ${toCity}"></span>
+        </h2>
+
+        <div th:if="${#lists.isEmpty(buses)}" class="text-center py-5">
+            <i class="bi bi-search fs-1 text-muted"></i>
+            <h5 class="mt-3 text-muted">No buses found for this route.</h5>
+            <button class="btn btn-outline-danger mt-3 rounded-pill" onclick="location.href='/'">Try Another Route</button>
+        </div>
+
+        <div th:each="bus : ${buses}" class="card bus-card border-0 shadow-sm p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <h4 class="fw-bold mb-1" th:text="${bus.busName}">Bus Name</h4>
+                    <span class="badge bg-light text-dark border" th:text="${bus.busType}">AC</span>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="small text-muted">DEPARTURE</div>
+                    <div class="fw-bold fs-5" th:text="${bus.departureTime}">09:00 AM</div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="small text-muted">FARE</div>
+                    <div class="fs-3 fw-bold text-danger">₹ <span th:text="${bus.price}">1200</span></div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="small text-muted">SEATS LEFT</div>
+                    <div class="fw-bold text-success"><span th:text="${bus.availableSeats}">30</span> Left</div>
+                </div>
+                <div class="col-md-3 text-end">
+                    <button class="btn btn-danger btn-lg rounded-pill px-4 fw-bold shadow-sm" 
+                            th:onclick="'showSeatMap(' + ${bus.price} + ')'">
+                        SELECT SEATS
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="seatSelectionSection">
+            <h3 class="text-center fw-800 mb-4">Select Your Seats</h3>
+            <div class="bus-outer">
+                <div class="steering"><i class="bi bi-gear-wide-connected"></i></div>
+                <p class="small text-muted fw-bold mb-3">LOWER DECK</p>
+                <div class="seat-row">
+                    <div class="sleeper-seat" onclick="toggleSeat(this)">LS1</div>
+                    <div class="sleeper-seat" onclick="toggleSeat(this)">LS2</div>
+                    <div class="sleeper-seat" onclick="toggleSeat(this)">LS3</div>
+                    <div class="sleeper-seat" onclick="toggleSeat(this)">LS4</div>
+                </div>
+                <div class="seat-row">
+                    <div class="sleeper-seat" onclick="toggleSeat(this)">LS5</div>
+                    <div class="sleeper-seat booked">LS6</div>
+                    <div class="sleeper-seat" onclick="toggleSeat(this)">LS7</div>
+                    <div class="sleeper-seat" onclick="toggleSeat(this)">LS8</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pBar" class="price-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <div class="small text-muted fw-bold">SELECTED SEATS</div>
+                <div id="seatsDisplay" class="fw-bold text-danger">None</div>
+            </div>
+            <div class="d-flex align-items-center gap-4">
+                <div class="text-end">
+                    <div class="small text-muted fw-bold">TOTAL AMOUNT</div>
+                    <div class="fs-3 fw-bold text-dark">₹ <span id="totalPrice">0</span></div>
+                </div>
+                <form action="/confirmBooking" method="POST">
+                    <input type="hidden" name="selectedSeats" id="hiddenSeats">
+                    <input type="hidden" name="totalAmount" id="hiddenAmount">
+                    <button type="submit" class="btn btn-danger btn-lg px-5 rounded-pill fw-bold" onclick="submitBooking(event)">
+                        PROCEED TO PAY
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mega-footer">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3">
+                    <h3 class="text-white fw-bold mb-4">redBus Pro</h3>
+                    <p class="small opacity-75">Transforming bus travel with cutting-edge AI and a customer-first approach.</p>
+                    <div class="d-flex gap-3 mt-4 text-white">
+                        <i class="bi bi-facebook fs-4"></i><i class="bi bi-twitter-x fs-4"></i><i class="bi bi-linkedin fs-4"></i><i class="bi bi-youtube fs-4"></i>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Top Routes</h6>
+                    <ul class="footer-links">
+                        <li>Mumbai to Pune</li><li>Hyderabad to Bangalore</li><li>Pune to Goa</li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Quick Links</h6>
+                    <ul class="footer-links">
+                        <li>About Us</li><li>Terms & Conditions</li><li>Privacy Policy</li><li>FAQ</li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Our Products</h6>
+                    <ul class="footer-links">
+                        <li>Bus Tickets</li><li>Rail Tickets</li><li>Cab Rentals</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <h6 class="footer-heading">Newsletter</h6>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control bg-dark border-0 text-white shadow-none" placeholder="Email">
+                        <button class="btn btn-danger">Join</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-5 opacity-25">
+            <div class="row pt-4 small opacity-50">
+                <div class="col-md-6">© 2026 redBus India Pvt Ltd. All rights reserved.</div>
+                <div class="col-md-6 text-md-end">Safety+ Certified Partner.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selected = [];
+        let currentBusPrice = 0;
+
+        function showSeatMap(price) {
+            currentBusPrice = price;
+            document.getElementById('seatSelectionSection').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('seatSelectionSection').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function toggleSeat(el) {
+            if(el.classList.contains('booked')) return;
+            const seatId = el.innerText;
+            if (el.classList.contains('selected')) {
+                el.classList.remove('selected');
+                selected = selected.filter(s => s !== seatId);
+            } else {
+                el.classList.add('selected');
+                selected.push(seatId);
+            }
+            updatePriceBar();
+        }
+
+        function updatePriceBar() {
+            const count = selected.length;
+            document.getElementById('seatsDisplay').innerText = count > 0 ? selected.join(', ') : 'None';
+            document.getElementById('totalPrice').innerText = count * currentBusPrice;
+            document.getElementById('pBar').style.display = count > 0 ? 'block' : 'none';
+        }
+
+        function submitBooking(e) {
+            if (selected.length === 0) {
+                alert("Please select at least one seat!");
+                e.preventDefault();
+                return;
+            }
+            document.getElementById('hiddenSeats').value = selected.join(',');
+            document.getElementById('hiddenAmount').value = document.getElementById('totalPrice').innerText;
+        }
+
+        window.onload = function() {
+            const user = localStorage.getItem('activeUser');
+            const authSlot = document.getElementById('authSlot');
+            if(user && authSlot) {
+                authSlot.innerHTML = `
+                    <div class="dropdown">
+                        <button class="btn btn-dark rounded-pill px-4 dropdown-toggle fw-bold shadow-sm" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-2"></i> ${user}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-2">
+                            <li><a class="dropdown-item py-2" href="/dashboard"><i class="bi bi-ticket-detailed me-2"></i> My Bookings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="logout()"><i class="bi bi-power me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>`;
+            } else {
+                authSlot.innerHTML = `<button class="btn btn-danger rounded-pill px-4 fw-bold" onclick="location.href='/login'">LOGIN</button>`;
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "/login";
+        }
+    </script>
+</body>
+</html>

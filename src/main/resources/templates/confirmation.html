@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed | redBus Pro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --rb-red: #D84E55; --rb-dark: #1F222F; }
+        body { background: #f0f2f5; font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 50px; }
+        
+        .success-banner { background: #2e7d32; color: white; padding: 20px; text-align: center; font-weight: 700; }
+        
+        .ticket-card { 
+            max-width: 700px; margin: 30px auto; background: white; border-radius: 20px; 
+            overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 1px solid #ddd;
+        }
+        
+        .ticket-header { background: var(--rb-dark); color: white; padding: 30px; position: relative; }
+        .ticket-body { padding: 40px; position: relative; }
+        
+        /* Dashed Line Effect */
+        .ticket-divider { border-top: 2px dashed #ccc; position: relative; margin: 20px 0; }
+        .ticket-divider::before, .ticket-divider::after {
+            content: ''; position: absolute; width: 30px; height: 30px; 
+            background: #f0f2f5; border-radius: 50%; top: -16px;
+        }
+        .ticket-divider::before { left: -55px; box-shadow: inset -5px 0 5px rgba(0,0,0,0.05); }
+        .ticket-divider::after { right: -55px; box-shadow: inset 5px 0 5px rgba(0,0,0,0.05); }
+
+        .qr-code { width: 120px; height: 120px; border: 1px solid #eee; padding: 5px; border-radius: 10px; }
+        
+        .info-label { color: #888; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px; }
+        .info-value { font-weight: 700; color: var(--rb-dark); font-size: 1.1rem; }
+        
+        .btn-action { border-radius: 12px; padding: 12px 25px; font-weight: 700; transition: 0.3s; }
+    </style>
+</head>
+<body>
+
+<div class="success-banner">
+    <i class="bi bi-check-circle-fill me-2"></i> CONGRATULATIONS! YOUR BOOKING IS CONFIRMED.
+</div>
+
+<div class="ticket-card">
+    <div class="ticket-header d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="m-0 fw-800">redBus <span class="text-danger">PRO</span></h3>
+            <p class="small opacity-75 m-0">E-Ticket: RB7782026X</p>
+        </div>
+        <div class="text-end">
+            <h5 class="m-0">AC Sleeper (2+1)</h5>
+            <span class="badge bg-danger">CONFIRMED</span>
+        </div>
+    </div>
+
+    <div class="ticket-body">
+        <div class="row mb-4">
+            <div class="col-6">
+                <div class="info-label">From</div>
+                <div class="info-value">Mumbai (Borivali East)</div>
+            </div>
+            <div class="col-6 text-end">
+                <div class="info-label">To</div>
+                <div class="info-value">Pune (Swargate)</div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-6">
+                <div class="info-label">Date & Time</div>
+                <div class="info-value">15 March 2026 | 10:30 PM</div>
+            </div>
+            <div class="col-6 text-end">
+                <div class="info-label">Seats</div>
+                <div class="info-value text-danger">LD1, LD2</div>
+            </div>
+        </div>
+
+        <div class="ticket-divider"></div>
+
+        <div class="row align-items-center">
+            <div class="col-8">
+                <div class="mb-3">
+                    <div class="info-label">Passenger Name</div>
+                    <div class="info-value">Riya Sharma</div>
+                </div>
+                <div class="mb-3">
+                    <div class="info-label">Reporting Address</div>
+                    <div class="info-value" style="font-size: 0.9rem;">Opposite National Park Gate, Western Express Highway.</div>
+                </div>
+            </div>
+            <div class="col-4 text-end">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=redBusPRO-Riya-Mumbai-Pune" alt="QR" class="qr-code">
+                <p class="small text-muted mt-1" style="font-size: 0.6rem;">Scan at Boarding</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-light p-4 text-center border-top">
+        <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-outline-dark btn-action" onclick="window.print()"><i class="bi bi-printer me-2"></i> Print</button>
+            <button class="btn btn-danger btn-action"><i class="bi bi-download me-2"></i> Download PDF</button>
+        </div>
+        <a href="/" class="d-block mt-3 text-decoration-none fw-bold text-muted small">Back to Home</a>
+    </div>
+</div>
+
+<div class="text-center text-muted small px-4">
+    <p>Please carry a valid ID proof along with this e-ticket during travel.<br>Reporting time is 15 minutes before departure.</p>
+</div>
+<footer class="mega-footer">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3">
+                    <h3 class="text-white fw-bold mb-4">redBus Pro</h3>
+                    <p class="small">Leading the global digital transformation of the bus industry with cutting-edge technology and customer-first approach.</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <i class="bi bi-facebook fs-4"></i><i class="bi bi-twitter-x fs-4"></i><i class="bi bi-linkedin fs-4"></i><i class="bi bi-youtube fs-4"></i>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Top Routes</h6>
+                    <ul class="footer-links">
+                        <li>Mumbai to Pune</li><li>Bangalore to Chennai</li><li>Delhi to Jaipur</li><li>Hyderabad to Bangalore</li><li>Pune to Goa</li><li>Chennai to Madurai</li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Quick Links</h6>
+                    <ul class="footer-links">
+                        <li>About Us</li><li>Contact Us</li><li>Terms & Conditions</li><li>Privacy Policy</li><li>FAQ</li><li>Blog</li><li>Offers</li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="footer-heading">Our Products</h6>
+                    <ul class="footer-links">
+                        <li>Bus Tickets</li><li>Rail Tickets</li><li>Cab Rentals</li><li>Insurance</li><li>RedDeals</li><li>Partner with Us</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <h6 class="footer-heading">Global Sites</h6>
+                    <p class="small mb-4">Serving customers across India, Singapore, Malaysia, Indonesia, Peru, and Colombia.</p>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control bg-dark border-0 text-white" placeholder="Enter Email">
+                        <button class="btn btn-danger">Join</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-5 opacity-25">
+            <div class="row pt-4 small opacity-50">
+                <div class="col-md-6">© 2026 redBus India Pvt Ltd. All rights reserved.</div>
+                <div class="col-md-6 text-md-end">Designed for Enterprise Excellence.</div>
+            </div>
+        </div>
+    </footer>
+<script type="text/javascript">window.onload = function() {
+    const user = localStorage.getItem('activeUser');
+    const authSlot = document.getElementById('authSlot'); // Navbar ka div
+    
+    if(user && authSlot) {
+        authSlot.innerHTML = `
+            <div class="dropdown">
+                <button class="btn btn-dark rounded-pill px-4 dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle me-2"></i> Hello, ${user}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+                    <li><a class="dropdown-item" href="/dashboard">My Bookings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#" onclick="logout()">Logout</a></li>
+                </ul>
+            </div>`;
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "/login";
+}</script>
+</body>
+</html>

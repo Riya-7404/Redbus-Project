@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .bus-card { border: none; border-radius: 15px; transition: 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .bus-card:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
+        .red-btn { background-color: #d84e55; color: white; border-radius: 5px; }
+        .navbar { background-color: #d84e55 !important; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">redBus</a>
+            <div class="d-flex text-white align-items-center">
+                <span class="me-3">Hi, <b th:text="${session.user.name}">User</b></span>
+                <a href="/logout" class="btn btn-sm btn-outline-light">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Available Bus Services</h2>
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mb-4" th:each="bus : ${buses}">
+                <div class="card bus-card">
+                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=500&q=60" class="card-img-top" style="border-radius: 15px 15px 0 0;" alt="Bus Image">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title text-danger" th:text="${bus.busName}">Express Travels</h5>
+                            <span class="badge bg-success">4.2 ★</span>
+                        </div>
+                        <p class="text-muted mb-1" th:text="${bus.source + ' ➔ ' + bus.destination}"></p>
+                        <div class="d-flex justify-content-between">
+                            <p><b>Price:</b> ₹<span th:text="${bus.price}"></span></p>
+                            <p class="text-primary"><b th:text="${bus.availableSeats}"></b> Seats left</p>
+                        </div>
+                        <a th:href="@{'/book/' + ${bus.id}}" class="btn red-btn w-100 py-2">Select Seats</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

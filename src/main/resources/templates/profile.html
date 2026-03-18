@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account | redBus</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+:root {
+	--rb-red: #D84E55;
+	--rb-dark: #1F222F;
+}
+
+body {
+	background: #f4f7f8;
+	font-family: 'Inter', sans-serif;
+}
+
+.profile-header {
+	background: var(--rb-dark);
+	height: 180px;
+	border-radius: 0 0 50px 50px;
+}
+
+.main-card {
+	margin-top: -80px;
+	border: none;
+	border-radius: 25px;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.sidebar {
+	background: white;
+	border-right: 1px solid #eee;
+	padding: 30px;
+}
+
+.nav-pills .nav-link {
+	color: #555;
+	font-weight: 600;
+	border-radius: 12px;
+	margin-bottom: 8px;
+	padding: 12px 20px;
+}
+
+.nav-pills .nav-link.active {
+	background: var(--rb-red);
+	color: white;
+}
+
+.wallet-card {
+	background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+	color: white;
+	border-radius: 20px;
+	padding: 30px;
+	position: relative;
+	overflow: hidden;
+}
+
+.wallet-card::after {
+	content: '';
+	position: absolute;
+	top: -20px;
+	right: -20px;
+	width: 120px;
+	height: 120px;
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 50%;
+}
+
+.balance-amount {
+	font-size: 2.5rem;
+	font-weight: 800;
+}
+
+.transaction-item {
+	border-bottom: 1px solid #eee;
+	padding: 15px 0;
+}
+
+.transaction-item:last-child {
+	border: none;
+}
+</style>
+</head>
+<body>
+
+	<nav class="navbar navbar-dark bg-dark py-3">
+		<div class="container">
+			<h4 class="fw-bold text-danger m-0" style="cursor: pointer"
+				onclick="location.href='index.html'">
+				red<span class="text-white">Bus</span>
+			</h4>
+			<button class="btn btn-outline-light btn-sm rounded-pill"
+				onclick="location.href='index.html'">
+				<i class="bi bi-arrow-left me-1"></i> Back to Home
+			</button>
+		</div>
+	</nav>
+
+	<div class="profile-header"></div>
+
+	<div class="container mb-5">
+		<div class="card main-card">
+			<div class="row g-0">
+				<div class="col-md-3 sidebar">
+					<div class="text-center mb-4">
+						<img
+							src="https://ui-avatars.com/api/?name=Riya&background=D84E55&color=fff&size=100"
+							class="rounded-circle border border-4 border-white shadow mb-3">
+						<h5 class="fw-bold mb-0">Riya Singh</h5>
+						<p class="text-muted small">riya@example.com</p>
+					</div>
+					<div class="nav flex-column nav-pills" id="v-pills-tab"
+						role="tablist">
+						<button class="nav-link active" data-bs-toggle="pill"
+							data-bs-target="#v-profile">
+							<i class="bi bi-person-circle me-2"></i> My Profile
+						</button>
+						<button class="nav-link" data-bs-toggle="pill"
+							data-bs-target="#v-wallet">
+							<i class="bi bi-wallet2 me-2"></i> redWallet
+						</button>
+						<button class="nav-link" onclick="location.href='dashboard.html'">
+							<i class="bi bi-ticket-perforated me-2"></i> My Bookings
+						</button>
+						<hr>
+						<button class="nav-link text-danger"
+							onclick="localStorage.clear(); location.href='index.html'">
+							<i class="bi bi-power me-2"></i> Logout
+						</button>
+					</div>
+				</div>
+
+				<div class="col-md-9 p-5 bg-white">
+					<div class="tab-content" id="v-pills-tabContent">
+
+						<div class="tab-pane fade show active" id="v-profile">
+							<h4 class="fw-bold mb-4">Account Settings</h4>
+							<div class="row g-3">
+								<div class="col-md-6">
+									<label class="small fw-bold text-muted">FULL NAME</label> <input
+										type="text" class="form-control py-2" value="Riya Singh">
+								</div>
+								<div class="col-md-6">
+									<label class="small fw-bold text-muted">MOBILE NUMBER</label> <input
+										type="text" class="form-control py-2" value="+91 9876543210">
+								</div>
+								<div class="col-md-12">
+									<label class="small fw-bold text-muted">EMAIL ADDRESS</label> <input
+										type="email" class="form-control py-2"
+										value="riya@example.com">
+								</div>
+								<div class="col-md-6">
+									<label class="small fw-bold text-muted">GENDER</label> <select
+										class="form-select"><option>Female</option>
+										<option>Male</option></select>
+								</div>
+								<div class="col-md-6">
+									<label class="small fw-bold text-muted">DATE OF BIRTH</label> <input
+										type="date" class="form-control" value="2002-05-15">
+								</div>
+							</div>
+							<button
+								class="btn btn-danger mt-4 px-5 py-2 fw-bold rounded-pill">SAVE
+								CHANGES</button>
+						</div>
+
+						<div class="tab-pane fade" id="v-wallet">
+							<div class="wallet-card shadow-lg mb-5">
+								<p class="small opacity-75 mb-1">Total redWallet Balance</p>
+								<div class="balance-amount">₹ 500.00</div>
+								<div class="mt-4">
+									<button class="btn btn-light btn-sm fw-bold px-3">+
+										ADD MONEY</button>
+									<button class="btn btn-outline-light btn-sm fw-bold px-3 ms-2">TRANSFER</button>
+								</div>
+							</div>
+
+							<h5 class="fw-bold mb-3">Recent Transactions</h5>
+							<div class="transaction-list">
+								<div
+									class="transaction-item d-flex justify-content-between align-items-center">
+									<div class="d-flex align-items-center">
+										<div class="bg-success-subtle p-2 rounded-circle me-3">
+											<i class="bi bi-plus-circle text-success"></i>
+										</div>
+										<div>
+											<h6 class="mb-0 fw-bold">Referral Bonus</h6>
+											<small class="text-muted">1st March 2026</small>
+										</div>
+									</div>
+									<span class="text-success fw-bold">+ ₹100</span>
+								</div>
+								<div
+									class="transaction-item d-flex justify-content-between align-items-center">
+									<div class="d-flex align-items-center">
+										<div class="bg-danger-subtle p-2 rounded-circle me-3">
+											<i class="bi bi-dash-circle text-danger"></i>
+										</div>
+										<div>
+											<h6 class="mb-0 fw-bold">Bus Ticket - Mumbai to Pune</h6>
+											<small class="text-muted">28 Feb 2026</small>
+										</div>
+									</div>
+									<span class="text-danger fw-bold">- ₹1250</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="mega-footer">
+		<div class="container">
+			<div class="row g-5">
+				<div class="col-lg-3">
+					<h3 class="text-white fw-bold mb-4">redBus Pro</h3>
+					<p class="small">Leading the global digital transformation of
+						the bus industry with cutting-edge technology and customer-first
+						approach.</p>
+					<div class="d-flex gap-3 mt-4">
+						<i class="bi bi-facebook fs-4"></i><i class="bi bi-twitter-x fs-4"></i><i
+							class="bi bi-linkedin fs-4"></i><i class="bi bi-youtube fs-4"></i>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<h6 class="footer-heading">Top Routes</h6>
+					<ul class="footer-links">
+						<li>Mumbai to Pune</li>
+						<li>Bangalore to Chennai</li>
+						<li>Delhi to Jaipur</li>
+						<li>Hyderabad to Bangalore</li>
+						<li>Pune to Goa</li>
+						<li>Chennai to Madurai</li>
+					</ul>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<h6 class="footer-heading">Quick Links</h6>
+					<ul class="footer-links">
+						<li>About Us</li>
+						<li>Contact Us</li>
+						<li>Terms & Conditions</li>
+						<li>Privacy Policy</li>
+						<li>FAQ</li>
+						<li>Blog</li>
+						<li>Offers</li>
+					</ul>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<h6 class="footer-heading">Our Products</h6>
+					<ul class="footer-links">
+						<li>Bus Tickets</li>
+						<li>Rail Tickets</li>
+						<li>Cab Rentals</li>
+						<li>Insurance</li>
+						<li>RedDeals</li>
+						<li>Partner with Us</li>
+					</ul>
+				</div>
+				<div class="col-lg-3 col-md-12">
+					<h6 class="footer-heading">Global Sites</h6>
+					<p class="small mb-4">Serving customers across India,
+						Singapore, Malaysia, Indonesia, Peru, and Colombia.</p>
+					<div class="input-group mb-3">
+						<input type="text"
+							class="form-control bg-dark border-0 text-white"
+							placeholder="Enter Email">
+						<button class="btn btn-danger">Join</button>
+					</div>
+				</div>
+			</div>
+			<hr class="mt-5 opacity-25">
+			<div class="row pt-4 small opacity-50">
+				<div class="col-md-6">© 2026 redBus India Pvt Ltd. All rights
+					reserved.</div>
+				<div class="col-md-6 text-md-end">Designed for Enterprise
+					Excellence.</div>
+			</div>
+		</div>
+	</footer>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

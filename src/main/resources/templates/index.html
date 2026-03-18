@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>redBus Pro | Global AI-Powered Mobility Platform</title>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+	rel="stylesheet">
+
+<style>
+:root {
+	--rb-primary: #D84E55;
+	--rb-dark: #1F222F;
+	--rb-light: #F8F9FA;
+}
+
+body {
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	background: white;
+	overflow-x: hidden;
+}
+
+/* --- PRE-HEADER --- */
+.pre-header {
+	background: var(--rb-dark);
+	color: white;
+	font-size: 12px;
+	padding: 8px 0;
+}
+
+/* --- NAVIGATION --- */
+.navbar {
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(10px);
+	border-bottom: 1px solid #eee;
+	padding: 15px 0;
+}
+
+.nav-link {
+	font-weight: 700;
+	color: var(--rb-dark) !important;
+	margin: 0 12px;
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+/* --- HERO --- */
+.hero {
+	background: linear-gradient(45deg, rgba(0, 0, 0, 0.8),
+		rgba(216, 78, 85, 0.3)),
+		url('https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=2000');
+	height: 85vh;
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	align-items: center;
+	color: white;
+	border-radius: 0 0 100px 100px;
+}
+
+/* --- SEARCH UI --- */
+.search-container {
+	background: white;
+	border-radius: 30px;
+	padding: 40px;
+	box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
+	margin-top: -100px;
+	position: relative;
+	z-index: 100;
+	border: 1px solid #eee;
+}
+
+/* --- INFO SECTIONS --- */
+.section-title {
+	font-weight: 800;
+	font-size: 2.5rem;
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+.info-card {
+	border: none;
+	padding: 40px;
+	border-radius: 30px;
+	background: var(--rb-light);
+	transition: 0.4s;
+	height: 100%;
+}
+
+.info-card:hover {
+	background: white;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+	transform: translateY(-10px);
+}
+
+/* --- STATS --- */
+.stats-bar {
+	background: var(--rb-primary);
+	color: white;
+	padding: 80px 0;
+	margin-top: 100px;
+	transform: skewY(-2deg);
+}
+
+.stats-bar>div {
+	transform: skewY(2deg);
+}
+
+/* --- MEGA FOOTER --- */
+.mega-footer {
+	background: var(--rb-dark);
+	color: #8a8d91;
+	padding: 100px 0 20px;
+}
+
+.footer-heading {
+	color: white;
+	font-weight: 800;
+	margin-bottom: 25px;
+	font-size: 1rem;
+	text-transform: uppercase;
+}
+
+.footer-links {
+	list-style: none;
+	padding: 0;
+}
+
+.footer-links li {
+	margin-bottom: 12px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.footer-links li:hover {
+	color: var(--rb-primary);
+	padding-left: 5px;
+}
+
+/* --- TRUST PARTNERS --- */
+.partner-img {
+	filter: grayscale(100%);
+	opacity: 0.5;
+	transition: 0.4s;
+	width: 120px;
+}
+
+.partner-img:hover {
+	filter: grayscale(0%);
+	opacity: 1;
+}
+
+.dest-card {
+	border-radius: 20px;
+	overflow: hidden;
+	position: relative;
+	height: 350px;
+	cursor: pointer;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dest-card img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: 0.6s ease;
+}
+
+.dest-card:hover img {
+	transform: scale(1.1);
+}
+
+.dest-overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 25px;
+	background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+	color: white;
+}
+
+.dest-overlay h4 {
+	font-weight: 800;
+	margin: 0;
+}
+</style>
+</head>
+<body onclick="checkAccess(event)">
+
+	<div class="pre-header">
+		<div class="container d-flex justify-content-between">
+			<span><i class="bi bi-telephone-fill me-2"></i> 24/7 Global
+				Support: +91 99999 00000</span> <span><i class="bi bi-globe me-2"></i>
+				Language: English (IN) | Currency: INR</span>
+		</div>
+	</div>
+
+	<nav class="navbar sticky-top">
+		<div
+			class="container d-flex justify-content-between align-items-center">
+			<a class="navbar-brand fw-bold text-danger fs-3" href="/">red<span
+				class="text-dark">Bus</span><span class="badge bg-danger ms-2 fs-6">ENTERPRISE</span></a>
+			<div class="d-none d-lg-flex align-items-center">
+				<a class="nav-link" href="/dashboard">Bus Tickets</a> <a
+					class="nav-link" href="/offers">RedDeals</a> <a class="nav-link"
+					href="/help">Help</a> <a class="nav-link" href="/ai-tech">AI
+					Technology</a>
+				<div id="authSlot" class="ms-3"></div>
+			</div>
+		</div>
+	</nav>
+
+	<section class="hero">
+		<div class="container" data-aos="fade-right">
+			<h1 class="display-1 fw-bold mb-4">
+				India's Largest <br>
+				<span class="text-danger">Bus Network.</span>
+			</h1>
+			<p class="fs-4 opacity-75 mb-5">Trusted by 36 Million+ travelers
+				across 15+ countries.</p>
+			<div class="d-flex gap-3">
+				<button class="btn btn-danger btn-lg px-5 rounded-pill fw-bold"
+					onclick="location.href='/dashboard'">Book Now</button>
+				<button
+					class="btn btn-outline-light btn-lg px-5 rounded-pill fw-bold">Explore
+					Routes</button>
+			</div>
+		</div>
+	</section>
+
+	<div class="container">
+		<div class="search-container" data-aos="zoom-in" data-aos-delay="200">
+			<form action="/searchBuses" method="POST">
+				<div class="row g-4">
+					<div class="col-md-3 border-end">
+						<label class="small fw-bold text-muted uppercase">From</label> <input
+							type="text" name="from"
+							class="form-control border-0 fw-bold fs-5 p-0"
+							placeholder="Mumbai" required>
+					</div>
+					<div class="col-md-3 border-end">
+						<label class="small fw-bold text-muted uppercase">To</label> <input
+							type="text" name="to"
+							class="form-control border-0 fw-bold fs-5 p-0" placeholder="Pune"
+							required>
+					</div>
+					<div class="col-md-3 border-end">
+						<label class="small fw-bold text-muted uppercase">Date</label> <input
+							type="date" name="travelDate"
+							class="form-control border-0 fw-bold fs-5 p-0" required>
+					</div>
+					<div class="col-md-3 d-flex align-items-center">
+						<button type="submit"
+							class="btn btn-danger w-100 py-3 rounded-pill fw-bold fs-5 shadow">SEARCH
+							BUSES</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<section class="stats-bar shadow-lg">
+		<div class="container text-center">
+			<div class="row g-5">
+				<div class="col-md-3" data-aos="fade-up">
+					<h3>36M+</h3>
+					<p class="m-0 opacity-75">Happy Customers</p>
+				</div>
+				<div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+					<h3>3500+</h3>
+					<p class="m-0 opacity-75">Bus Operators</p>
+				</div>
+				<div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+					<h3>15+</h3>
+					<p class="m-0 opacity-75">Countries Global</p>
+				</div>
+				<div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+					<h3>100K+</h3>
+					<p class="m-0 opacity-75">Tickets Daily</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="py-5 mt-5">
+		<div class="container py-5">
+			<h2 class="section-title" data-aos="fade-up">Next-Gen Travel
+				Features</h2>
+			<div class="row g-4">
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="info-card">
+						<i class="bi bi-robot display-4 text-danger mb-4"></i>
+						<h4 class="fw-bold">AI Price Optimizer</h4>
+						<p class="text-muted">Our AI predicts when ticket prices will
+							drop, helping you save up to 40% on every booking.</p>
+						<a href="#" class="text-danger fw-bold text-decoration-none">Learn
+							More <i class="bi bi-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+					<div class="info-card">
+						<i class="bi bi-shield-fill-check display-4 text-success mb-4"></i>
+						<h4 class="fw-bold">Primo Bus Service</h4>
+						<p class="text-muted">Verified top-rated operators with
+							punctual service and high hygiene standards.</p>
+						<a href="#" class="text-danger fw-bold text-decoration-none">Explore
+							Primo <i class="bi bi-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+					<div class="info-card">
+						<i class="bi bi-headset display-4 text-primary mb-4"></i>
+						<h4 class="fw-bold">24/7 AI Concierge</h4>
+						<p class="text-muted">Got a problem? Our AI assistant resolves
+							90% of travel queries instantly without human delay.</p>
+						<a href="#" class="text-danger fw-bold text-decoration-none">Get
+							Help <i class="bi bi-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="py-5 mt-5">
+		<div class="container py-5 ">
+			<h2 class="section-title">Trending Destinations</h2>
+			<div class="row g-4">
+				<div class="col-md-4" data-aos="zoom-in">
+					<div class="dest-card">
+						<img
+							src="https://images.unsplash.com/photo-1595658658481-d53d3f999875?auto=format&fit=crop&q=80&w=800"
+							alt="Mumbai">
+						<div class="dest-overlay">
+							<h4>Mumbai</h4>
+							<p>From ₹499</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+					<div class="dest-card">
+						<img
+							src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&q=80&w=800"
+							alt="Chennai">
+						<div class="dest-overlay">
+							<h4>Chennai</h4>
+							<p>From ₹799</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+					<div class="dest-card">
+						<img
+							src="https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+							alt="Agra">
+						<div class="dest-overlay">
+							<h4>Agra</h4>
+							<p>From ₹399</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-light py-5">
+		<div class="container text-center">
+			<p class="text-muted fw-bold mb-5">STRATEGIC PARTNERS & OPERATORS</p>
+			<div class="d-flex flex-wrap justify-content-center gap-5">
+				<img src="https://www.irctc.co.in/nget/assets/images/logo.png" class="partner-img" style="height: 50px; width: auto;" alt="IRCTC Logo">
+				<img src="https://st.redbus.in/Images/rdc/rdc-redbus-logo.svg" class="partner-img"> 
+				
+			</div>
+		</div>
+	</section>
+
+	<footer class="mega-footer">
+		<div class="container">
+			<div class="row g-5">
+				<div class="col-lg-3">
+					<h3 class="text-white fw-bold mb-4">redBus Pro</h3>
+					<p class="small">Leading the global digital transformation of
+						the bus industry with cutting-edge technology and customer-first
+						approach.</p>
+					<div class="d-flex gap-3 mt-4">
+						<i class="bi bi-facebook fs-4"></i><i class="bi bi-twitter-x fs-4"></i><i
+							class="bi bi-linkedin fs-4"></i><i class="bi bi-youtube fs-4"></i>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<h6 class="footer-heading">Top Routes</h6>
+					<ul class="footer-links">
+						<li>Mumbai to Pune</li>
+						<li>Bangalore to Chennai</li>
+						<li>Delhi to Jaipur</li>
+						<li>Hyderabad to Bangalore</li>
+						<li>Pune to Goa</li>
+						<li>Chennai to Madurai</li>
+					</ul>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<h6 class="footer-heading">Quick Links</h6>
+					<ul class="footer-links">
+						<li>About Us</li>
+						<li>Contact Us</li>
+						<li>Terms & Conditions</li>
+						<li>Privacy Policy</li>
+						<li>FAQ</li>
+						<li>Blog</li>
+						<li>Offers</li>
+					</ul>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<h6 class="footer-heading">Our Products</h6>
+					<ul class="footer-links">
+						<li>Bus Tickets</li>
+						<li>Rail Tickets</li>
+						<li>Cab Rentals</li>
+						<li>Insurance</li>
+						<li>RedDeals</li>
+						<li>Partner with Us</li>
+					</ul>
+				</div>
+				<div class="col-lg-3 col-md-12">
+					<h6 class="footer-heading">Global Sites</h6>
+					<p class="small mb-4">Serving customers across India,
+						Singapore, Malaysia, Indonesia, Peru, and Colombia.</p>
+					<div class="input-group mb-3">
+						<input type="text"
+							class="form-control bg-dark border-0 text-white"
+							placeholder="Enter Email">
+						<button class="btn btn-danger">Join</button>
+					</div>
+				</div>
+			</div>
+			<hr class="mt-5 opacity-25">
+			<div class="row pt-4 small opacity-50">
+				<div class="col-md-6">© 2026 redBus India Pvt Ltd. All rights
+					reserved.</div>
+				<div class="col-md-6 text-md-end">Designed for Enterprise
+					Excellence.</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+    AOS.init({ duration: 1000, once: true });
+
+    // Dono window.onload ko ek mein merge kar diya hai
+    window.onload = function() {
+        const slot = document.getElementById('authSlot');
+        const user = localStorage.getItem('activeUser');
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+        if(isLoggedIn && user) {
+            slot.innerHTML = `
+                <div class="dropdown">
+                    <button class="btn btn-dark rounded-pill px-4 py-2 dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-2"></i> Hello, ${user}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3">
+                        <li><a class="dropdown-item py-2" href="/dashboard">My Bookings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                </div>`;
+        } else {
+            slot.innerHTML = `<button class="btn btn-danger rounded-pill px-5 py-2 fw-bold" onclick="location.href='/login'">LOG IN</button>`;
+        }
+    }
+
+    function checkAccess(e) {
+        // Form inputs ya buttons par click karne par redirect na ho, isliye check
+        if(e.target.closest('input') || e.target.closest('button')) return;
+
+        if(localStorage.getItem('isLoggedIn') !== 'true' && !e.target.closest('.navbar')) {
+            window.location.href = "/login";
+        }
+    }
+
+    function logout() { 
+        localStorage.clear(); 
+        window.location.href = "/login"; 
+    }
+</script>
+</body>
+</html>

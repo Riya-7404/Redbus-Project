@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedDeals & Offers | redBus Pro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --rb-red: #D84E55; --rb-dark: #1F222F; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f4f7f8; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Navbar Styling */
+        .navbar { background: white; border-bottom: 1px solid #eee; padding: 15px 0; }
+        .nav-link { font-weight: 700; color: var(--rb-dark) !important; margin: 0 12px; font-size: 14px; text-transform: uppercase; }
+        .nav-link:hover { color: var(--rb-red) !important; }
+
+        /* Hero Section */
+        .offers-hero {
+            background: var(--rb-red); color: white; padding: 80px 0; text-align: center;
+            border-radius: 0 0 50px 50px;
+            background-image: radial-gradient(circle at top right, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        /* Card Alignment Logic */
+        .offer-card {
+            background: white; border-radius: 25px; overflow: hidden; border: none;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            display: flex; flex-direction: column; position: relative;
+        }
+        .offer-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(216, 78, 85, 0.15); }
+
+        .offer-img { height: 200px; object-fit: cover; width: 100%; display: block; background: #e9ecef; }
+
+        .offer-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+
+        .promo-code {
+            background: #fff5f5; border: 2px dashed var(--rb-red); padding: 12px;
+            border-radius: 12px; color: var(--rb-red); font-weight: 800;
+            text-align: center; cursor: pointer; text-transform: uppercase; margin-top: 15px;
+            transition: 0.2s;
+        }
+        .promo-code:hover { background: var(--rb-red); color: white; border-style: solid; }
+
+        .tag { color: white; padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 800; position: absolute; top: 15px; left: 15px; z-index: 10; }
+
+        /* Mega Footer */
+        .mega-footer { background: var(--rb-dark); color: #ffffff; padding: 80px 0 30px; margin-top: auto; }
+        .footer-heading { font-weight: 800; margin-bottom: 25px; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; color: #ffffff; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 12px; opacity: 0.7; transition: 0.3s; cursor: pointer; font-size: 0.9rem; }
+        .footer-links li:hover { opacity: 1; padding-left: 5px; color: var(--rb-red); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-bold text-danger fs-3" href="/">red<span class="text-dark">Bus</span> <span class="badge bg-danger ms-1 fs-6">PRO</span></a>
+            <div class="d-none d-lg-flex align-items-center">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/all-buses">Routes</a>
+                <a class="nav-link" href="/help">Help</a>
+                <div id="authSlot" class="ms-3"></div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="offers-hero">
+        <div class="container">
+            <h1 class="display-4 fw-800">Exclusive <span class="text-dark">RedDeals</span></h1>
+            <p class="fs-5 opacity-75">Verified discounts for your next journey.</p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <div class="row g-4 d-flex align-items-stretch">
+            
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag bg-success">NEW USER</span> 
+                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">Flat 20% OFF</h5>
+                        <p class="text-muted small">On your first booking. Max discount up to ₹250.</p>
+                        <div class="promo-code" onclick="copyCode('FIRST20')">FIRST20</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag bg-danger">FESTIVE</span> 
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">Weekend Special</h5>
+                        <p class="text-muted small">Flat ₹100 cashback on Sat/Sun journeys.</p>
+                        <div class="promo-code" onclick="copyCode('WEEKEND')">WEEKEND</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag bg-primary">GROUP SAVER</span> 
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">Group Booking</h5>
+                        <p class="text-muted small">Book for 4+ people and save extra on fare.</p>
+                        <div class="promo-code" onclick="copyCode('GROUPTRAVEL')">GROUPTRAVEL</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag" style="background: #0056b3;">BANK OFFER</span> 
+                    <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">HDFC Special</h5>
+                        <p class="text-muted small">10% instant discount on HDFC Cards.</p>
+                        <div class="promo-code" onclick="copyCode('HDFC10')">HDFC10</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag" style="background: #6f42c1;">REFER & EARN</span> 
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">Refer Friends</h5>
+                        <p class="text-muted small">Earn ₹200 for every referral journey.</p>
+                        <div class="promo-code" onclick="copyCode('REF200')">REF200</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag" style="background: #fd7e14;">STUDENT</span> 
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">Student Deal</h5>
+                        <p class="text-muted small">Flat 15% off for students with valid ID.</p>
+                        <div class="promo-code" onclick="copyCode('STUDENT15')">STUDENT15</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag" style="background: #20c997;">CASHBACK</span> 
+                    <img src="https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">Wallet Offer</h5>
+                        <p class="text-muted small">Get ₹150 cashback via Amazon Pay.</p>
+                        <div class="promo-code" onclick="copyCode('AMZPAY')">AMZPAY</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag" style="background: #343a40;">NIGHT OWL</span> 
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">Late Night Deals</h5>
+                        <p class="text-muted small">Special pricing for 11PM - 5AM bookings.</p>
+                        <div class="promo-code" onclick="copyCode('NIGHT40')">NIGHT40</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="offer-card">
+                    <span class="tag" style="background: #ffc107; color: black;">PRIME</span> 
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=400" class="offer-img">
+                    <div class="offer-content">
+                        <h5 class="fw-bold">Prime Access</h5>
+                        <p class="text-muted small">Zero cancellation fees for members.</p>
+                        <div class="promo-code" onclick="location.href='/prime'">JOIN NOW</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mega-footer">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3">
+                    <h3 class="text-white fw-bold mb-4">redBus Pro</h3>
+                    <p class="small opacity-75">Global leader in bus booking technology.</p>
+                    <div class="d-flex gap-3 mt-4 text-white">
+                        <i class="bi bi-facebook fs-4"></i><i class="bi bi-twitter-x fs-4"></i><i class="bi bi-linkedin fs-4"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h6 class="footer-heading">Quick Links</h6>
+                    <ul class="footer-links">
+                        <li>About Us</li><li>Contact Us</li><li>Privacy Policy</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h6 class="footer-heading">Offers</h6>
+                    <ul class="footer-links">
+                        <li>New User</li><li>Bank Offers</li><li>Student Discounts</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 text-md-end">
+                    <h6 class="footer-heading">Newsletter</h6>
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-dark border-0 text-white" placeholder="Email">
+                        <button class="btn btn-danger">Join</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-5 opacity-25">
+            <p class="text-center small opacity-50 mb-0">© 2026 redBus India Pvt Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function copyCode(code) {
+        navigator.clipboard.writeText(code);
+        alert("Code " + code + " Copied!");
+    }
+    
+    window.onload = function() {
+        const user = localStorage.getItem('activeUser');
+        const authSlot = document.getElementById('authSlot');
+        if(user && authSlot) {
+            authSlot.innerHTML = `
+                <div class="dropdown">
+                    <button class="btn btn-dark rounded-pill px-4 dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-2"></i> ${user}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2">
+                        <li><a class="dropdown-item py-2" href="/dashboard">My Bookings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                </div>`;
+        } else if (authSlot) {
+            authSlot.innerHTML = `<button class="btn btn-danger rounded-pill px-4 fw-bold" onclick="location.href='/login'">LOGIN</button>`;
+        }
+    }
+
+    function logout() {
+        localStorage.clear();
+        window.location.href = "/login";
+    }
+    </script>
+</body>
+</html>
